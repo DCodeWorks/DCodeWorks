@@ -6,6 +6,5 @@ import sitemap from '@astrojs/sitemap';
 // https://astro.build/config
 export default defineConfig({
 	site: 'https://danhajek.github.io',
-	base:'DCodeWorks',
 	integrations: [mdx(), sitemap()],
 });
