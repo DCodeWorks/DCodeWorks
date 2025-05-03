@@ -37,3 +37,19 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+  publish-to-devto:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      - name: Publish to dev.to
+        uses: amitsingh-007/devto-publish@v2
+        with:
+          # relative path to your Markdown file
+          file: ${{ github.event.head_commit.added[0] || github.event.head_commit.modified[0] }}
+          api_key: ${{ secrets.DEVTO_API_KEY }}
+          # you can override other defaults:
+          publish: true            # set to false if you want drafts
+          # tags are picked from frontmatter; no need to set here
