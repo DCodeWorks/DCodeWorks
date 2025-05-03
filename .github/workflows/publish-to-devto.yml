@@ -1,0 +1,32 @@
+# .github/workflows/publish-to-devto.yml
+name: Publish blog posts to dev.to
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'src/content/blog/**.md'  # adjust to your content folder
+  workflow_dispatch:
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Python dependencies
+        run: pip install frontmatter requests
+
+      - name: Publish to dev.to
+        env:
+          DEVTO_API_KEY: ${{ secrets.DEVTO_API_KEY }}
+        run: python .github/scripts/publish_to_devto.py
